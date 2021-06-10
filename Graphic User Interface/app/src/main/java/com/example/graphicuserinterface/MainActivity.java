@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Credentiale incorecte! Incercati din nou!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Credentiale corecte!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, SocketActivity.class);
+                        Intent intent = new Intent(MainActivity.this, SelectSocketActivity.class);
                         startActivity(intent);
                     }
                 }

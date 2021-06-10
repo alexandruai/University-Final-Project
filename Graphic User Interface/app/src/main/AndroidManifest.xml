@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GraphicUserInterface">
-        <activity android:name=".SocketActivity"></activity>
+        <activity android:name=".SwitchSocketStateActivity"></activity>
+        <activity android:name=".AddSocketActivity" />
+        <activity android:name=".SelectSocketActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
