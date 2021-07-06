@@ -51,15 +51,13 @@
         app:layout_constraintTop_toBottomOf="@+id/tvPriza"
         app:layout_constraintVertical_bias="0.957" />
 
-    <Spinner
-        android:id="@+id/spnSocket"
-        android:layout_width="335dp"
-        android:layout_height="45dp"
-        android:spinnerMode="dropdown"
-        android:textAlignment="textStart"
+    <ListView
+        android:id="@+id/listViewSockets"
+        android:layout_width="340dp"
+        android:layout_height="308dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSwitchState"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPriza"
-        app:layout_constraintVertical_bias="0.438" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPriza" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
