@@ -1,5 +1,7 @@
 package com.andra2699.webserver;
 
+import io.javalin.http.Context;
+
 public class Credentials {
     private String userName;
     private String password;
@@ -24,4 +26,5 @@ public class Credentials {
     public void setPassword(String password) {
         this.password = password;
     }
+
 }

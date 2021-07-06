@@ -30,14 +30,14 @@ public class Device {
 
     private String states;
 
-    private boolean getState(int index) {
+    public boolean getState(int index) {
         if (index < 0 || index >= SOCKET_COUNT) {
             throw new IllegalArgumentException();
         }
         return Boolean.parseBoolean(states.split(" ")[index]);
     }
 
-    private void setState(int index, boolean value) {
+    public void setState(int index, boolean value) {
         if (index < 0 || index >= SOCKET_COUNT) {
             throw new IllegalArgumentException();
         }

@@ -48,6 +48,20 @@ public class DataRepository {
         }
     }
 
+    public Optional<User> getUserByToken(String token) {
+        Query<User> query = session.createNamedQuery("User_FindByToken");
+        query.setParameter(1, token);
+        query.setMaxResults(1);
+        try {
+            return Optional.ofNullable(query.getSingleResult());
+        } catch (NoResultException _u) {
+            return Optional.empty();
+        } catch (IllegalStateException | PersistenceException e) {
+            logger.error("Failed to fetch user", e);
+            return Optional.empty();
+        }
+    }
+
     public void save(Device device) {
         session.save(device);
     }

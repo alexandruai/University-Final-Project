@@ -2,16 +2,18 @@ package com.andra2699.webserver;
 
 import com.andra2699.ApplicationContext;
 import com.andra2699.data.DataRepository;
+import com.andra2699.data.entities.Device;
 import com.andra2699.data.entities.User;
 import io.javalin.Javalin;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Javalin serverApp = Javalin.create().start(8981);
+        /*Javalin serverApp = Javalin.create().start(8981);
         //Restapi
         serverApp.get("/", ctx -> { ctx.result("Se conecteaza utilizatorul...");});
         serverApp.get("/credentials/", ctx -> { ctx.result("Introduceti credentialele...");
@@ -25,10 +27,12 @@ public class Main {
         });
 
         //verificare restapi
-        serverApp.get("/websocketclient/", ctx -> {});
+        serverApp.get("/websocketclient/", ctx -> {});*/
 
 
         ApplicationContext applicationContext = new ApplicationContext();
+
+        applicationContext.getRestEndpoint().startWebserver();
 
         DataRepository data = applicationContext.getDataRepositoryFactory().create();
 
@@ -39,18 +43,15 @@ public class Main {
             data.commitTransaction();
         }
 
-        if (true) {
+        if (false) {
+
             data.beginTransaction();
-            Optional<User> u = data.getUserByUsername("lucaci32u4");
-            if (u.isPresent()) {
-                User uu = u.get();
-                System.out.println(uu.getPassword());
-            } else {
-                System.out.println("No user found");
-            }
+            data.save(new Device(applicationContext, "dfgfdhfg"));
+            data.save(new Device(applicationContext, "adfghjk"));
+            data.save(new Device(applicationContext, "qwyuiop"));
+            data.save(new Device(applicationContext, "zxcvbnm"));
             data.commitTransaction();
         }
-
 
         data.close();
 

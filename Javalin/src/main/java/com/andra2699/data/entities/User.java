@@ -13,7 +13,8 @@ import java.util.UUID;
 @Entity
 @Accessors(chain = true)
 @NamedQueries({
-        @NamedQuery(name = "User_FindByUsername", query = "SELECT u from User u where u.username = ?1")
+        @NamedQuery(name = "User_FindByUsername", query = "SELECT u from User u where u.username = ?1"),
+        @NamedQuery(name = "User_FindByToken", query = "SELECT u from User u where u.token = ?1")
 })
 public class User {
 
@@ -29,6 +30,9 @@ public class User {
     @Getter @Setter
     private String password;
 
+    @Getter
+    private String token;
+
     public User(ApplicationContext applicationContext, String username, String password) {
         this.id = UUID.randomUUID().toString();
         this.applicationContext = applicationContext;
@@ -39,6 +43,7 @@ public class User {
     public User(ApplicationContext applicationContext, String id) {
         this.applicationContext = applicationContext;
         this.id = id;
+        regenerateToken();
     }
 
     @Getter
@@ -53,8 +58,13 @@ public class User {
         device.getUsers().add(this);
     }
 
-    void remove(Device device) {
+    void removeDevice(Device device) {
         devices.remove(device);
         device.getUsers().remove(this);
+    }
+
+    String regenerateToken() {
+        token = "TK" + UUID.randomUUID().toString().replaceAll("-", "");
+        return token;
     }
 }
