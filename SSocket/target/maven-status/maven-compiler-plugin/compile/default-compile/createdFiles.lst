@@ -1,0 +1,8 @@
+com/andra2699/ssocket/hardware/HardwareLayer.class
+com/andra2699/ssocket/hardware/VirtualHardwareLayer$StateMutator.class
+com/andra2699/ssocket/hardware/GPIOMapBuilder.class
+com/andra2699/ssocket/Main.class
+com/andra2699/ssocket/hardware/RealHardwareLayer.class
+com/andra2699/ssocket/hardware/HardwareLayer$StateMutator.class
+com/andra2699/ssocket/hardware/VirtualHardwareLayer.class
+com/andra2699/ssocket/hardware/RealHardwareLayer$StateMutator.class
