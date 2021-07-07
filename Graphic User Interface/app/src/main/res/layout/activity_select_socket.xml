@@ -53,8 +53,8 @@
 
     <ListView
         android:id="@+id/listViewSockets"
-        android:layout_width="340dp"
-        android:layout_height="308dp"
+        android:layout_width="407dp"
+        android:layout_height="282dp"
         app:layout_constraintBottom_toTopOf="@+id/btnSwitchState"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

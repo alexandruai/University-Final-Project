@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ public class AddSocketActivity extends AppCompatActivity {
     EditText edIdNewSocket;
     Button btnAddIdSocket;
     Button btnBack;
+    Intent intent;
     public static final String ADD_Socket = "addSocket";
 
     @Override
@@ -26,7 +28,7 @@ public class AddSocketActivity extends AppCompatActivity {
         edIdNewSocket = findViewById(R.id.etIdSocket);
         btnAddIdSocket = findViewById(R.id.btnAdauga);
         btnBack = findViewById(R.id.btnBack);
-        Intent intent = getIntent();
+        intent = getIntent();
 
         btnAddIdSocket.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,19 +37,12 @@ public class AddSocketActivity extends AppCompatActivity {
                 if(edIdNewSocket.getText().toString().isEmpty()){
                     edIdNewSocket.setError("Introduceti id priza fizica!");
                 } else {
-                    String id = edIdNewSocket.getText().toString();
-                    boolean[] state = {false, false, false, false};
-                    Socket socket = new Socket(id, state);
+                    Socket socket = new Socket(edIdNewSocket.getText().toString());
 
-                    //add restApi route catre server trimite noua priza id
-                    // routa si cu stari?
-
-                    intent.putExtra(ADD_Socket, (Serializable) socket);
+                    intent.putExtra(ADD_Socket, socket);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
-
-
             }
         });
 

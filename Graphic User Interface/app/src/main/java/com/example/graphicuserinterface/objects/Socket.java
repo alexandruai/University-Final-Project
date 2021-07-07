@@ -1,12 +1,17 @@
 package com.example.graphicuserinterface.objects;
 
-public class Socket {
-    String id;
-    boolean state[] = new boolean[4];
+import android.os.Parcelable;
 
-    public Socket(String id, boolean[] state) {
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class Socket implements Serializable {
+    String id;
+    boolean[] state;
+
+    public Socket(String id) {
         this.id = id;
-        this.state = state;
+        this.state = new boolean[]{false, false, false, false};
     }
 
     public String getId() {
@@ -27,4 +32,12 @@ public class Socket {
 
     public void getSocket(){}
     public void putSocket(){}
+
+    @Override
+    public String toString() {
+        return "Socket{" +
+                "id='" + id + '\'' +
+                ", state=" + Arrays.toString(state) +
+                '}';
+    }
 }
