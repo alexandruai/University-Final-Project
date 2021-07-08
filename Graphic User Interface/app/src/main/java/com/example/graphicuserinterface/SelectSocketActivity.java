@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +19,6 @@ import com.example.graphicuserinterface.objects.Socket;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,10 +93,6 @@ public class SelectSocketActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -127,11 +122,12 @@ public class SelectSocketActivity extends AppCompatActivity {
     public void set(String key, String value) {
         editor.putString(key, value);
         editor.commit();
+        editor.apply();
     }
 
     public List <Socket> getList(){
         List<Socket> arrayItems = new ArrayList<Socket>();
-        String serializedObject = preferences.getString(SAVE_SOCKET_LIST, null);
+        String serializedObject = preferences.getString("socketList", null);
         if (serializedObject != null) {
             Gson gson = new Gson();
             Type type = new TypeToken<List<Socket>>(){}.getType();
