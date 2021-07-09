@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient.Builder().build();
         RequestBody body = RequestBody.create(MediaType.get("application/json"), String.valueOf(jsonContent));
         Request request = new Request.Builder()
-                .url("https://andra.lucai32u4.xyz/api/login")
+                .url("https://andra.lucaci32u4.xyz/api/login")
                 .post(body)
                 .build();
         try {
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(msg);
                 throw new WrongCodeException();
             } else {
+                assert response.body() != null;
                 header = response.body().toString();
                 Intent intent = new Intent(MainActivity.this, SelectSocketActivity.class);
                 startActivity(intent);
