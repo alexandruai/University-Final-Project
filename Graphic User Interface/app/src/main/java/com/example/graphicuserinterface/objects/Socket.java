@@ -14,6 +14,11 @@ public class Socket implements Serializable {
         this.state = new boolean[]{false, false, false, false};
     }
 
+    public Socket(String id, boolean[] state) {
+        this.id = id;
+        this.state = state;
+    }
+
     public String getId() {
         return id;
     }
@@ -25,6 +30,7 @@ public class Socket implements Serializable {
     public boolean[] getState() {
         return state;
     }
+    public boolean getStateIndex(int index){ return this.state[index]; }
 
     public void setState(boolean[] state) {
         this.state = state;

@@ -1,6 +1,7 @@
 package com.example.graphicuserinterface;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.graphicuserinterface.exception.WrongCodeException;
+import com.example.graphicuserinterface.requests.Rest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import okhttp3.MediaType;
@@ -31,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText etNumeUtilizator, etParola;
     private TextView tvAutentificare;
     private Button btnLogare;
-    String header;
+    String autentificare = "Login";
+    Executor executor;
+    Rest rest;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +50,10 @@ public class MainActivity extends AppCompatActivity {
         etParola = findViewById(R.id.etPassword);
         tvAutentificare = findViewById(R.id.tvAutentificare);
         btnLogare = findViewById(R.id.btnAutentificare);
+        executor = ContextCompat.getMainExecutor(this);
+        rest = new Rest();
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        tvAutentificare.setText(autentificare);
 
         btnLogare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,65 +62,24 @@ public class MainActivity extends AppCompatActivity {
                 String inputNumeUtilizator = etNumeUtilizator.getText().toString();
                 String inputParola = etParola.getText().toString();
 
-
                 if (inputNumeUtilizator.isEmpty() || inputParola.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Introduceti credentiale!", Toast.LENGTH_SHORT).show();
                 } else {
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put("username", inputNumeUtilizator);
-                        jsonObject.put("password", inputParola);
-                    } catch (JSONException e) {
-                        System.out.println("Json error");
-                        e.printStackTrace();
-                    }
-
-                    Thread thread = new Thread(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            try  {
-                                validare(jsonObject);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                    CompletableFuture<Boolean> validare = rest.login(inputNumeUtilizator, inputParola);
+                    validare.thenAcceptAsync( aBoolean -> {
+                        if(aBoolean){
+                            Intent intent = new Intent(MainActivity.this, SelectSocketActivity.class);
+                            intent.putExtra("Token", rest.getToken());
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(MainActivity.this,
+                                    "Credentiale incorecte!",
+                                    Toast.LENGTH_SHORT).show();
                         }
-                    });
-                    thread.start();
+                    } ,executor);
                 }
             }
         });
     }
 
-    private void validare(JSONObject jsonContent) throws WrongCodeException {
-        OkHttpClient client = new OkHttpClient.Builder().build();
-        RequestBody body = RequestBody.create(MediaType.get("application/json"), String.valueOf(jsonContent));
-        Request request = new Request.Builder()
-                .url("https://andra.lucaci32u4.xyz/api/login")
-                .post(body)
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
-            String msg = String.valueOf(response.code());
-            System.out.println(msg);
-            Log.i("Code: ", String.valueOf(response.code()));
-            response.close();
-            if (response.code() != 200) {
-
-                Log.e("WrongCode ", msg);
-                System.out.println(msg);
-                throw new WrongCodeException();
-            } else {
-                assert response.body() != null;
-                header = response.body().toString();
-                Intent intent = new Intent(MainActivity.this, SelectSocketActivity.class);
-                startActivity(intent);
-
-            }
-        } catch (IOException exception) {
-           String msg = exception.getMessage();
-            System.out.println(msg);
-            throw new WrongCodeException();
-        }
-    }
 }

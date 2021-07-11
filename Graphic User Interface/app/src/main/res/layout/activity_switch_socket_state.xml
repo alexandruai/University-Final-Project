@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="204dp"
-        android:text="Pornire/ Oprire"
+        android:text="Oprire/ Pornire"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.911"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Pornire/ Oprire"
+        android:text="Oprire/ Pornire"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.911"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:text="Pornire/ Oprire"
+        android:text="Oprire/ Pornire"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.911"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:layout_marginBottom="126dp"
-        android:text="Pornire/ Oprire"
+        android:text="Oprire/ Pornire"
         app:layout_constraintBottom_toTopOf="@+id/btnBackSelectActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.911"
@@ -67,18 +67,21 @@
 
     <TextView
         android:id="@+id/tvIdPriza"
-        android:layout_width="85dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="52dp"
+        android:layout_width="104dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="40dp"
         android:text="Id"
+        app:layout_constraintBottom_toTopOf="@+id/switchSocket1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSwitchState" />
+        app:layout_constraintTop_toBottomOf="@+id/tvSwitchState"
+        app:layout_constraintVertical_bias="0.179" />
 
     <TextView
         android:id="@+id/tvStareSocket1"
-        android:layout_width="95dp"
-        android:layout_height="32dp"
+        android:layout_width="98dp"
+        android:layout_height="40dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="204dp"
         android:text="Stare Socket1"
@@ -100,8 +103,8 @@
 
     <TextView
         android:id="@+id/tvStareSocket3"
-        android:layout_width="95dp"
-        android:layout_height="31dp"
+        android:layout_width="96dp"
+        android:layout_height="37dp"
         android:layout_marginTop="32dp"
         android:text="Stare Socket3"
         app:layout_constraintEnd_toStartOf="@+id/switchSocket3"
@@ -111,8 +114,8 @@
 
     <TextView
         android:id="@+id/tvStareSocket4"
-        android:layout_width="100dp"
-        android:layout_height="27dp"
+        android:layout_width="90dp"
+        android:layout_height="39dp"
         android:layout_marginTop="28dp"
         android:layout_marginBottom="129dp"
         android:text="Stare Socket4"
@@ -127,11 +130,22 @@
         android:id="@+id/btnBackSelectActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="164dp"
+        android:layout_marginBottom="60dp"
         android:text="Selecteaza alta priza"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnSaveChanges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:text="Salvare Stare Priza"
+        app:layout_constraintBottom_toTopOf="@+id/btnBackSelectActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvIdPriza"
+        app:layout_constraintTop_toBottomOf="@+id/switchSocket4"
         app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

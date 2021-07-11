@@ -1,9 +1,12 @@
 package com.example.graphicuserinterface;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,27 +16,33 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.graphicuserinterface.objects.Socket;
+import com.example.graphicuserinterface.requests.Rest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 public class SelectSocketActivity extends AppCompatActivity {
 
     public static final int ADD_CODE = 0;
     public static final String Switch_State = "switch";
-    public static final int REQUEST_CODE_Switch = 200;
+    public static final int SWITCH_CODE = 200;
     ListView listView;
     List<Socket> socketList;
     int poz;
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
     public static final String SAVE_SOCKET_LIST = "saveSockets";
+    String selectSocket = "Selectare Priza";
+    TextView tvSelect;
+    Executor executor;
+    Rest rest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +53,10 @@ public class SelectSocketActivity extends AppCompatActivity {
         Button btnDelogare = findViewById(R.id.btnDelogare);
         socketList = new ArrayList<Socket>();
         listView = findViewById(R.id.listViewSockets);
-        preferences = getApplicationContext().getSharedPreferences(SAVE_SOCKET_LIST, Context.MODE_PRIVATE);
-        editor = preferences.edit();
-        socketList = getList();
+        tvSelect = findViewById(R.id.tvPriza);
+        tvSelect.setText(selectSocket);
+        executor = ContextCompat.getMainExecutor(this);
+        rest = new Rest(getIntent().getStringExtra("Token"));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -60,80 +70,55 @@ public class SelectSocketActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SelectSocketActivity.this, SwitchSocketStateActivity.class);
                 intent.putExtra(Switch_State, socketList.get(poz));
-                startActivityForResult(intent, REQUEST_CODE_Switch);
+                intent.putExtra("Token", rest.getToken());
+                startActivityForResult(intent, SWITCH_CODE);
             }
         });
 
-        btnAdaugaPrizaNoua.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddSocketActivity.class);
-                startActivityForResult(intent, ADD_CODE);
-            }
+        btnAdaugaPrizaNoua.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), AddSocketActivity.class);
+            intent.putExtra("Token", rest.getToken());
+            startActivity(intent);
         });
 
 
-        btnDelogare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SelectSocketActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
+        btnDelogare.setOnClickListener(v -> {
+            Intent intent = new Intent(SelectSocketActivity.this, MainActivity.class);
+            startActivity(intent);
         });
+
+
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        ArrayAdapter<Socket>  adapter = new ArrayAdapter<Socket>(this,
-                android.R.layout.simple_dropdown_item_1line,
-                socketList);
-        listView.setAdapter(adapter);
-
+        CompletableFuture<List<Socket>> listaServer = rest.getSocketList();
+        listaServer.thenAcceptAsync(sockets -> {
+            if(sockets != null){
+                socketList = sockets;
+                ArrayAdapter<Socket>  adapter = new ArrayAdapter<Socket>(this,
+                        android.R.layout.simple_dropdown_item_1line,
+                        socketList);
+                listView.setAdapter(adapter);
+            }
+        }, executor);
     }
-
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ADD_CODE && resultCode == RESULT_OK && data != null) {
-            ArrayAdapter<Socket>  adapter = new ArrayAdapter<Socket>(this,
-                    android.R.layout.simple_dropdown_item_1line,
-                    socketList);
-            listView.setAdapter(adapter);
-            Socket socket = (Socket) data.getSerializableExtra(AddSocketActivity.ADD_Socket);
-            if(socket != null){
-                socketList.add(socket);
-                Toast.makeText(SelectSocketActivity.this, socket.toString(), Toast.LENGTH_SHORT).show();
-                adapter.notifyDataSetChanged();
-                setList("socketList", socketList);
-
+    protected void onResume() {
+        super.onResume();
+        CompletableFuture<List<Socket>> listaServer = rest.getSocketList();
+        listaServer.thenAcceptAsync(sockets -> {
+            if(sockets != null){
+                socketList = sockets;
+                ArrayAdapter<Socket>  adapter = new ArrayAdapter<Socket>(this,
+                        android.R.layout.simple_dropdown_item_1line,
+                        socketList);
+                listView.setAdapter(adapter);
             }
-        }
-    }
-
-    public <Socket> void setList(String key, List<Socket> list) {
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        set(key, json);
-    }
-
-    public void set(String key, String value) {
-        editor.putString(key, value);
-        editor.commit();
-        editor.apply();
-    }
-
-    public List <Socket> getList(){
-        List<Socket> arrayItems = new ArrayList<Socket>();
-        String serializedObject = preferences.getString("socketList", null);
-        if (serializedObject != null) {
-            Gson gson = new Gson();
-            Type type = new TypeToken<List<Socket>>(){}.getType();
-            arrayItems = gson.fromJson(serializedObject, type);
-        }
-        return arrayItems;
+        }, executor);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.graphicuserinterface;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,12 +10,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.graphicuserinterface.exception.WrongCodeException;
 import com.example.graphicuserinterface.objects.Socket;
+import com.example.graphicuserinterface.requests.Rest;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -27,8 +33,10 @@ public class AddSocketActivity extends AppCompatActivity {
     EditText edIdNewSocket;
     Button btnAddIdSocket;
     Button btnBack;
-    Intent intent;
-    public static final String ADD_Socket = "addSocket";
+    String addSocket = "Adauga Stare Priza";
+    TextView tvStarePRiza;
+    Executor executor;
+    Rest rest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,76 +45,35 @@ public class AddSocketActivity extends AppCompatActivity {
         edIdNewSocket = findViewById(R.id.etIdSocket);
         btnAddIdSocket = findViewById(R.id.btnAdauga);
         btnBack = findViewById(R.id.btnBack);
-        intent = getIntent();
+        tvStarePRiza = findViewById(R.id.tvAddSocket);
+        tvStarePRiza.setText(addSocket);
+        executor = ContextCompat.getMainExecutor(this);
+        rest = new Rest(getIntent().getStringExtra("Token"));
 
-        btnAddIdSocket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnAddIdSocket.setOnClickListener(v -> {
 
-                if(edIdNewSocket.getText().toString().isEmpty()){
-                    edIdNewSocket.setError("Introduceti id priza fizica!");
-                } else {
-                    Socket socket = new Socket(edIdNewSocket.getText().toString());
+            if(edIdNewSocket.getText().toString().isEmpty()){
+                edIdNewSocket.setError("Introduceti id priza fizica!");
+            } else {
 
-                    Thread thread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try  {
-                                String newId = edIdNewSocket.getText().toString();
-                                postDevice(newId);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-
-                    thread.start();
-                    intent.putExtra(ADD_Socket, socket);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
+                String newId = edIdNewSocket.getText().toString();
+                CompletableFuture<Boolean> isNewIdAdded = rest.addDevice(newId);
+                isNewIdAdded.thenAcceptAsync(aBoolean -> {
+                    if(aBoolean){
+                        Toast.makeText(AddSocketActivity.this,
+                                "S-a introdus noua priza",
+                                Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else
+                        Toast.makeText(AddSocketActivity.this,
+                                "Nu s-a putut adauga noua priza",
+                                Toast.LENGTH_SHORT).show();
+                }, executor);
             }
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AddSocketActivity.this, SelectSocketActivity.class);
-                startActivity(intent);
-            }
-        });
+        btnBack.setOnClickListener(v -> finish());
         
     }
 
-    private void postDevice(String newDeviceId){
-//        OkHttpClient client = new OkHttpClient.Builder().build();
-//        RequestBody body = RequestBody.create(MediaType.get("application/json"), newDeviceId);
-//        Request request = new Request.Builder()
-//                .url("https://andra.lucaci32u4.xyz/api/add/:device")
-//                .addHeader("TokenAuth", MainActivity.header)
-//                .post(body)
-//                .build();
-//        try {
-//            Response response = client.newCall(request).execute();
-//            String msg = String.valueOf(response.code());
-//            System.out.println(msg);
-//            Log.i("Code: ", String.valueOf(response.code()));
-//            response.close();
-//            if (response.code() != 200) {
-//
-//                Log.e("WrongCode ", msg);
-//                System.out.println(msg);
-//                throw new WrongCodeException();
-//            } else {
-//                header = response.body().toString();
-//                Intent intent = new Intent(MainActivity.this, SelectSocketActivity.class);
-//                startActivity(intent);
-//
-//            }
-//        } catch (IOException exception) {
-//            String msg = exception.getMessage();
-//            System.out.println(msg);
-//            throw new WrongCodeException();
-//        }
-    }
 }
