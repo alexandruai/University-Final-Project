@@ -27,7 +27,7 @@ import okhttp3.Response;
 public class Rest implements Serializable {
 
     private static final Executor executor = Executors.newSingleThreadExecutor();
-    private static final OkHttpClient client = new OkHttpClient();
+    private static final OkHttpClient client = new OkHttpClient.Builder().cache(null).build();
     String token;
 
     public Rest(String token) {
@@ -136,7 +136,7 @@ public class Rest implements Serializable {
                         responseState.close();
                         boolean[] states = new boolean[4];
                         for( int j = 0; j < 4; j++){
-                            states[i] = socketStates.getBoolean(i);
+                            states[j] = socketStates.getBoolean(j);
                         }
                         Socket newSocket = new Socket(arrayId.getString(i), states);
                         listaSocketServer.add(newSocket);
@@ -155,20 +155,33 @@ public class Rest implements Serializable {
 
 
 
-//    public CompletableFuture<List<Boolean>> postStateList(String socketID){
-//        return CompletableFuture.supplyAsync(() -> {
-//            Request request = new Request.Builder()
-//                    .url("https://andra.lucaci32u4.xyz/api/socket/" + socketID)
-//                    .addHeader("TokenAuth", token)
-//                    .post()
-//                    .build();
-//            try {
-//                List<Boolean> states = new ArrayList<>();
-//                Response responseSocketState = client.newCall(request).execute();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }, executor);
-//    }
+    public CompletableFuture<Boolean> postStateList(Socket socket){
+        return CompletableFuture.supplyAsync(() -> {
+            JSONArray jsonStates = new JSONArray();
+            for(int i =0; i < 4; i++){
+                jsonStates.put(socket.getStateIndex(i));
+            }
+            RequestBody body = RequestBody.create(MediaType.get("application/json"), jsonStates.toString());
+            Request request = new Request.Builder()
+                    .url("https://andra.lucaci32u4.xyz/api/socket/" + socket.getId())
+                    .addHeader("TokenAuth", token)
+                    .post(body)
+                    .build();
+            try {
+                Response responseSocketState = client.newCall(request).execute();
+                if( responseSocketState.code() == 200){
+
+                    responseSocketState.close();
+                    return true;
+                }
+                responseSocketState.close();
+                return false;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }, executor);
+    }
 
 }

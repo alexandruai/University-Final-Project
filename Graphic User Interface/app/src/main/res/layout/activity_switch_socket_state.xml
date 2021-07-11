@@ -53,8 +53,8 @@
 
     <Switch
         android:id="@+id/switchSocket4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="138dp"
+        android:layout_height="51dp"
         android:layout_marginTop="36dp"
         android:layout_marginBottom="126dp"
         android:text="Oprire/ Pornire"
@@ -130,22 +130,12 @@
         android:id="@+id/btnBackSelectActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="144dp"
         android:text="Selecteaza alta priza"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnSaveChanges"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
-        android:text="Salvare Stare Priza"
-        app:layout_constraintBottom_toTopOf="@+id/btnBackSelectActivity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchSocket4"
+        app:layout_constraintTop_toBottomOf="@+id/tvIdPriza"
         app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

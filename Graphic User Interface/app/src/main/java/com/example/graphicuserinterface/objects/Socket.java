@@ -36,14 +36,12 @@ public class Socket implements Serializable {
         this.state = state;
     }
 
-    public void getSocket(){}
-    public void putSocket(){}
+    public void setStateIndex(int index, boolean newState) { this.state[index] = newState; }
+
 
     @Override
     public String toString() {
-        return "Socket{" +
-                "id='" + id + '\'' +
-                ", state=" + Arrays.toString(state) +
-                '}';
+        return "Priza:" + id + '\'' +
+                ", Stari" + Arrays.toString(state);
     }
 }

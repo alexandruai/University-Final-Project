@@ -32,7 +32,6 @@ import java.util.concurrent.Executor;
 
 public class SelectSocketActivity extends AppCompatActivity {
 
-    public static final int ADD_CODE = 0;
     public static final String Switch_State = "switch";
     public static final int SWITCH_CODE = 200;
     ListView listView;
