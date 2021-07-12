@@ -38,7 +38,6 @@ public class Socket implements Serializable {
 
     public void setStateIndex(int index, boolean newState) { this.state[index] = newState; }
 
-
     @Override
     public String toString() {
         return "Priza:" + id + '\'' +

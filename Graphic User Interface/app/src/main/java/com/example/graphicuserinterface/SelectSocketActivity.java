@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.graphicuserinterface.adapter.SocketAdapter;
 import com.example.graphicuserinterface.objects.Socket;
 import com.example.graphicuserinterface.requests.Rest;
 import com.google.gson.Gson;
@@ -97,9 +98,9 @@ public class SelectSocketActivity extends AppCompatActivity {
         listaServer.thenAcceptAsync(sockets -> {
             if(sockets != null){
                 socketList = sockets;
-                ArrayAdapter<Socket>  adapter = new ArrayAdapter<Socket>(this,
-                        android.R.layout.simple_dropdown_item_1line,
-                        socketList);
+                SocketAdapter adapter = new SocketAdapter(getApplicationContext(),
+                        R.layout.socket_listview_adapter,
+                        socketList, getLayoutInflater());
                 listView.setAdapter(adapter);
             }
         }, executor);
@@ -112,9 +113,9 @@ public class SelectSocketActivity extends AppCompatActivity {
         listaServer.thenAcceptAsync(sockets -> {
             if(sockets != null){
                 socketList = sockets;
-                ArrayAdapter<Socket>  adapter = new ArrayAdapter<Socket>(this,
-                        android.R.layout.simple_dropdown_item_1line,
-                        socketList);
+                SocketAdapter adapter = new SocketAdapter(getApplicationContext(),
+                        R.layout.socket_listview_adapter,
+                        socketList, getLayoutInflater());
                 listView.setAdapter(adapter);
             }
         }, executor);
