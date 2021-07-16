@@ -17,7 +17,8 @@
         app:layout_constraintBottom_toTopOf="@+id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.422"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="#FF000000"/>
 
     <EditText
         android:id="@+id/etPassword"
@@ -30,7 +31,8 @@
         app:layout_constraintBottom_toTopOf="@+id/btnAutentificare"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.422"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="#FF000000"/>
 
     <Button
         android:id="@+id/btnAutentificare"
@@ -53,5 +55,6 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.282" />
+        app:layout_constraintVertical_bias="0.282"
+        android:textColor="#FF000000"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

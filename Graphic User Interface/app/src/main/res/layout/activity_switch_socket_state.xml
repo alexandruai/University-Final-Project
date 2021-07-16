@@ -16,7 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.553"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#FF000000"/>
 
     <Switch
         android:id="@+id/switchSocket1"
@@ -76,7 +77,8 @@
         app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSwitchState"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:textColor="#FF000000"/>
 
     <TextView
         android:id="@+id/tvStareSocket1"
@@ -88,7 +90,8 @@
         app:layout_constraintEnd_toStartOf="@+id/switchSocket1"
         app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#FF000000"/>
 
     <TextView
         android:id="@+id/tvStareSocket2"
@@ -99,7 +102,8 @@
         app:layout_constraintEnd_toStartOf="@+id/switchSocket2"
         app:layout_constraintHorizontal_bias="0.367"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvStareSocket1" />
+        app:layout_constraintTop_toBottomOf="@+id/tvStareSocket1"
+        android:textColor="#FF000000"/>
 
     <TextView
         android:id="@+id/tvStareSocket3"
@@ -110,7 +114,8 @@
         app:layout_constraintEnd_toStartOf="@+id/switchSocket3"
         app:layout_constraintHorizontal_bias="0.318"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvStareSocket2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvStareSocket2"
+        android:textColor="#FF000000"/>
 
     <TextView
         android:id="@+id/tvStareSocket4"
@@ -124,7 +129,8 @@
         app:layout_constraintHorizontal_bias="0.322"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvStareSocket3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:textColor="#FF000000"/>
 
     <Button
         android:id="@+id/btnBackSelectActivity"
