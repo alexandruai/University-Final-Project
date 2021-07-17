@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SelectSocketActivity">
+    tools:context=".SelectSocketActivity"
+    android:background="#ffff00">
 
     <TextView
         android:id="@+id/tvPriza"
@@ -12,11 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="Selectare/ Adaugare Priza"
+        android:textColor="#FF000000"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="#FF000000"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnDelogare"

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#ffff00">
 
     <EditText
         android:id="@+id/etUserName"
@@ -18,7 +19,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.422"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColor="#FF000000"/>
+        android:textColor="#FF000000"
+        android:background="#ccffcc"/>
 
     <EditText
         android:id="@+id/etPassword"
@@ -32,7 +34,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.422"
         app:layout_constraintStart_toStartOf="parent"
-        android:textColor="#FF000000"/>
+        android:textColor="#FF000000"
+        android:background="#ccffcc"/>
 
     <Button
         android:id="@+id/btnAutentificare"
@@ -50,11 +53,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Va rog sa va autentificati!"
+        android:textColor="#FF000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/etUserName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.282"
-        android:textColor="#FF000000"/>
+        app:layout_constraintVertical_bias="0.282" />
 </androidx.constraintlayout.widget.ConstraintLayout>
